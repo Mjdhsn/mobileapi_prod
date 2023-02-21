@@ -13,11 +13,11 @@ aws ecr get-login-password --region $aws_region | docker login --username AWS --
 
 # build
 echo "building image..."
-docker build -f project/Dockerfile --platform=linux/amd64 -t $aws_account_id.dkr.ecr.$aws_region.amazonaws.com/$aws_ecr_name:dev ./project/
+docker build -f project/Dockerfile --platform=linux/amd64 -t $aws_account_id.dkr.ecr.$aws_region.amazonaws.com/$aws_ecr_name ./project/
 
 # post-build
 echo "pushing image to AWS ECR..."
-docker push $aws_account_id.dkr.ecr.$aws_region.amazonaws.com/$aws_ecr_name:dev
+docker push $aws_account_id.dkr.ecr.$aws_region.amazonaws.com/$aws_ecr_name
 
 echo "updating ECS service..."
 aws ecs update-service --cluster $aws_cluster_name --service $aws_service_name --force-new-deployment
